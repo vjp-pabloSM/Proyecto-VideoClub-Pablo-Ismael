@@ -2,10 +2,10 @@
 
 // Clase base para los soportes d un videoclub
 class Soporte {
-    private $titulo = "";
-    private $numero = 0;
+    public $titulo = "";
+    protected $numero = 0;
     private $precio = 0;
-    private static $IVA = 0.21;
+    private const IVA = 0.21;
 
     // Constructor
     public function __construct($titulo, $numero, $precio) {
@@ -20,7 +20,7 @@ class Soporte {
     }
 
     public function getPrecioConIva() {
-        return $this->precio * (1 + self::$IVA);
+        return $this->precio * (1 + self::IVA);
     }
 
     public function getNumero() {
