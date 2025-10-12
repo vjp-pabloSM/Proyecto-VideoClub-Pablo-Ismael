@@ -29,10 +29,10 @@ class Soporte {
 
     // Muestra un resumen del soporte en formato HTML
     public function muestraResumen() {
-        echo "<p>Título: {$this->titulo}<br>";
-        echo "Número: {$this->numero}<br>";
-        echo "Precio sin IVA: {$this->precio} €<br>";
-        echo "Precio con IVA: " . number_format($this->getPrecioConIva(), 2) . " €</p>";
+        echo "Título: ".$this->titulo."<br>";
+        echo "Número: ".$this->numero."<br>";
+        echo "Precio sin IVA: ".$this->precio." €<br>";
+        echo "Precio con IVA: " . round($this->getPrecioConIva(), 2) . " €<br>";
     }
 }
 ?>
