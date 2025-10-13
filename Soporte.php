@@ -1,7 +1,9 @@
 <?php 
 
-// Clase base para los soportes d un videoclub
+// Clase base para los soportes de un videoclub
 class Soporte {
+
+    // Variables
     public $titulo = "";
     protected $numero = 0;
     private $precio = 0;
@@ -20,7 +22,7 @@ class Soporte {
     }
 
     public function getPrecioConIva() {
-        return $this->precio * (1 + self::IVA);
+        return round($this->precio * (1 + self::IVA), 2);
     }
 
     public function getNumero() {
@@ -29,10 +31,8 @@ class Soporte {
 
     // Muestra un resumen del soporte en formato HTML
     public function muestraResumen() {
-        echo "Título: ".$this->titulo."<br>";
-        echo "Número: ".$this->numero."<br>";
-        echo "Precio sin IVA: ".$this->precio." €<br>";
-        echo "Precio con IVA: " . round($this->getPrecioConIva(), 2) . " €<br>";
+        echo $this->titulo." (Nº: " . $this->numero . ")  <br>";
+        echo $this->precio." €  (IVA no incluido)<br>";
     }
 }
 ?>
