@@ -98,7 +98,7 @@ class Cliente {
     // Muestra un resumen del cliente 
     public function muestraResumen() {
         echo "<p>Cliente: " . $this->nombre . "</p>";
-        echo "<p>Número de cliente: " . $this->numero . "</p>";
+        echo "<p>Número de cliente: " . ($this->numero+1) . "</p>";
         echo "<p>Soportes alquilados: " . count($this->soportesAlquilados) . " de " . $this->maxAlquilerConcurrente . " posibles.</p>";
     }
 }

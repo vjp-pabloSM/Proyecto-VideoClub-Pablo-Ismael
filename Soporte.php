@@ -31,7 +31,7 @@ class Soporte {
 
     // Muestra un resumen del soporte en formato HTML
     public function muestraResumen() {
-        echo $this->titulo." (Nº: " . $this->numero . ")  <br>";
+        echo $this->titulo." (Nº " . $this->numero . ")  <br>";
         echo $this->precio." €  (IVA no incluido)<br>";
     }
 }
