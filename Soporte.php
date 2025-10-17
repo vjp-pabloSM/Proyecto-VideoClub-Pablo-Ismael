@@ -1,7 +1,8 @@
-<?php 
+<?php
+include_once "Resumible.php";
 
 // Clase base para los soportes de un videoclub
-class Soporte {
+abstract class Soporte implements Resumible {
 
     // Variables
     public $titulo = "";
@@ -29,10 +30,7 @@ class Soporte {
         return $this->numero;
     }
 
-    // Muestra un resumen del soporte en formato HTML
-    public function muestraResumen() {
-        echo $this->titulo." (Nº " . $this->numero . ")  <br>";
-        echo $this->precio." €  (IVA no incluido)<br>";
-    }
+    // Método abstracto implementado de la interfaz Resumible
+    abstract public function muestraResumen();
 }
 ?>

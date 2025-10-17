@@ -45,10 +45,10 @@ class Videoclub{
 
     // Método para incluir los socios
     public function incluirSocio($nombre, $maxAlquilerConcurrente = 3) {
-        $cliente = new Cliente($nombre, $this->numSocios, $maxAlquilerConcurrente);
+        $cliente = new Cliente($nombre, $this->numSocios+1, $maxAlquilerConcurrente);
         $this->socios[] = $cliente;
         $this->numSocios++;
-        echo "<p>El cliente " . $nombre . " (nº " . ($this->numSocios+1) . ") ha sido añadido correctamente</p>";
+        echo "<p>El cliente " . $nombre . " (nº " . $this->numSocios . ") ha sido añadido correctamente</p>";
     }
 
     // Método que muestra los productos en una lista

@@ -1,11 +1,10 @@
 <?php
 
 // Para probar la clase Cliente.php
-
-include_once "CintaVideo.php";
-include_once "Dvd.php";
-include_once "Juego.php";
-include_once "Cliente.php";
+include "CintaVideo.php";
+include "Dvd.php";
+include "Juego.php";
+include "Cliente.php";
 
 //instanciamos un par de objetos cliente
 $cliente1 = new Cliente("Guillermo Díaz", 23);

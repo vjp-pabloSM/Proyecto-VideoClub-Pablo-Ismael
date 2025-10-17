@@ -2,7 +2,7 @@
 include_once "Soporte.php";
 
 // Clase CintaVideo hija de Soporte
-class CintaVideo extends Soporte{
+class CintaVideo extends Soporte {
 
     // Variable
     private $duracion;
@@ -13,10 +13,11 @@ class CintaVideo extends Soporte{
         $this->duracion = $duracion;
     }
 
-    // Sobreescribe muestraResumen()
+    // Método heredado de soporte en la cual es implementado por la interfaz Resumible
     public function muestraResumen(){
-        echo "Película en VHS: <br>";
-        parent::muestraResumen();
+        echo "<strong>Película en VHS: </strong><br>";
+        echo $this->titulo . " (Nº " . $this->getNumero() . ")<br>";
+        echo $this->getPrecio() . " € (IVA no incluido)<br>";
         echo "Duración: " . $this->duracion . " minutos<br>" ;
     }
 }

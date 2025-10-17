@@ -51,7 +51,7 @@ class Cliente {
 
         // Para saber si sobrepasa el máximo de alquileres simultáneos
         if (count($this->soportesAlquilados) >= $this->maxAlquilerConcurrente) {
-            echo "<p>El cliente " . $this->nombre . " ha alcanzado el número máximo de alquileres permitidos.</p>";
+            echo "<p>El cliente " . $this->nombre . " ha alcanzado el número máximo de alquileres permitidos.<br>No podrá volver a alquilar en este Videoclub hasta devolver algo.</p>";
             return false;
         }
 
@@ -97,9 +97,9 @@ class Cliente {
     
     // Muestra un resumen del cliente 
     public function muestraResumen() {
-        echo "<p>Cliente: " . $this->nombre . "</p>";
-        echo "<p>Número de cliente: " . ($this->numero+1) . "</p>";
-        echo "<p>Soportes alquilados: " . count($this->soportesAlquilados) . " de " . $this->maxAlquilerConcurrente . " posibles.</p>";
+        echo "<p>Cliente: " . $this->nombre . "<br>";
+        echo "Nº de cliente: " . $this->numero . "<br>";
+        echo "Soportes alquilados: " . count($this->soportesAlquilados) . " de " . $this->maxAlquilerConcurrente . " posibles.</p>";
     }
 }
 

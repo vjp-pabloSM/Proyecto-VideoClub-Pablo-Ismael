@@ -2,7 +2,7 @@
 include_once "Soporte.php";
 
 // Clase Juego hija de Soporte
-class Juego extends Soporte{
+class Juego extends Soporte {
 
     // Variables
     public $consola;
@@ -28,10 +28,11 @@ class Juego extends Soporte{
         }
     }
 
-    // Sobreescribe muestraResumen()
+    // Método heredado de soporte en la cual es implementado por la interfaz Resumible
     public function muestraResumen(){
-        echo "Juego para: " . $this->consola . "<br>" ;
-        parent::muestraResumen();
+        echo "<strong>Juego para: " . $this->consola . "</strong><br>" ;
+        echo $this->titulo . " (Nº " . $this->getNumero() . ")<br>";
+        echo $this->getPrecio() . " € (IVA no incluido)<br>";
         $this->muestraJugadoresPosibles() ;
     }
 }

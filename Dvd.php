@@ -1,8 +1,8 @@
-<?php 
+<?php
 include_once "Soporte.php";
 
 // Clase Dvd hija de Soporte
-class Dvd extends Soporte{
+class Dvd extends Soporte {
 
     // Variables
     public $idiomas;
@@ -10,15 +10,16 @@ class Dvd extends Soporte{
 
     // Constructor
     public function __construct($titulo, $numero, $precio, $idiomas, $formatPantalla) {
-            parent::__construct($titulo, $numero, $precio);
-            $this->idiomas = $idiomas;
-            $this->formatPantalla = $formatPantalla;
+        parent::__construct($titulo, $numero, $precio);
+        $this->idiomas = $idiomas;
+        $this->formatPantalla = $formatPantalla;
     }
 
-    // Sobreescribe muestraResumen()
+    // Método heredado de soporte en la cual es implementado por la interfaz Resumible
     public function muestraResumen(){
-        echo "Película en DVD: <br>";
-        parent::muestraResumen();
+        echo "<strong>Película en DVD: </strong><br>";
+        echo $this->titulo . " (Nº " . $this->getNumero() . ")<br>";
+        echo $this->getPrecio() . " € (IVA no incluido)<br>";
         echo "Idiomas: " . $this->idiomas . "<br>" ;
         echo "Formato de pantalla: " . $this->formatPantalla . "<br>" ;
     }
