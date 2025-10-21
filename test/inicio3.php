@@ -1,3 +1,14 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta name="author" content="IsmaelGJ">
+   <title>Inicio 3</title>
+   <link rel="stylesheet" href="../css/estiloVideoclub.css">
+</head>
+<body>
+   <h1>Estás en Inicio 3</h1>
 <?php
 
 use PROYECTO_VIDEOCLUB_PABLO_ISMAEL\Videoclub;
@@ -29,8 +40,10 @@ $vc->alquilarSocioProducto(1,2)
    ->alquilarSocioProducto(1,2)
    // intento alquilar el soporte 6 (debe respetar el límite de alquileres)
    ->alquilarSocioProducto(1,6);
- 
+
 //listo los socios 
 $vc->listarSocios();
 
 ?>
+</body>
+</html>

@@ -50,30 +50,30 @@ class Cliente {
     public function alquilar(Soporte $s) {
 
          // Para saber si lo tiene ya alquilado
-         if ($this->tieneAlquilado($s)) {
-             throw new SoporteYaAlquiladoException(
-                 "El cliente {$this->nombre} (nº {$this->numero}) ya tiene alquilado el soporte nº {$s->getNumero()}."
-             );
-         }
+        if ($this->tieneAlquilado($s)) {
+            throw new SoporteYaAlquiladoException(
+                "El cliente {$this->nombre} (nº {$this->numero}) ya tiene alquilado el soporte nº {$s->getNumero()}."
+            );
+        }
 
          // Para saber si sobrepasa el máximo de alquileres simultáneos
-         if (count($this->soportesAlquilados) >= $this->maxAlquilerConcurrente) {
-             throw new CupoSuperadoException(
-                 "El cliente {$this->nombre} (nº {$this->numero}) ha alcanzado el número máximo de alquileres ({$this->maxAlquilerConcurrente})."
-             );
-         }
+        if (count($this->soportesAlquilados) >= $this->maxAlquilerConcurrente) {
+            throw new CupoSuperadoException(
+                "El cliente {$this->nombre} (nº {$this->numero}) ha alcanzado el número máximo de alquileres ({$this->maxAlquilerConcurrente})."
+            );
+        }
 
          // Se añade el alquiler al cliente
-         $this->soportesAlquilados[] = $s;
-         $this->numSoportesAlquilados++;
-         // marcar el soporte como alquilado
-         $s->alquilado = true;
+        $this->soportesAlquilados[] = $s;
+        $this->numSoportesAlquilados++;
+        // marcar el soporte como alquilado
+        $s->alquilado = true;
 
-         echo "<p>El cliente " . $this->nombre . " ha alquilado este soporte: </p>";
-         $s->muestraResumen();
+        echo "<p>El cliente " . $this->nombre . " ha alquilado este soporte: </p>";
+        $s->muestraResumen();
 
          return $this; // permite encadenamiento
-     }
+    }
 
     // Devuelve un soporte por el número (lanza excepción si no lo tenía; retorna $this para encadenar)
     public function devolver(int $numSoporte) {

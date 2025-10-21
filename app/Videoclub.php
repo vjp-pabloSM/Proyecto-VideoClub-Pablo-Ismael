@@ -85,6 +85,7 @@ class Videoclub{
         return $this->numProductosAlquilados;
     }
 
+    // Devuelve el total de alquileres realizados
     public function getNumTotalAlquileres(): int {
         return $this->numTotalAlquileres;
     }
@@ -118,7 +119,7 @@ class Videoclub{
                 $this->numTotalAlquileres++;
             } catch (VideoclubException $e) {
                 // Informar al usuario del motivo (todas las excepciones de cliente heredan de VideoclubException)
-                echo "<p>No se pudo realizar el alquiler: " . htmlspecialchars($e->getMessage(), ENT_QUOTES, 'UTF-8') . "</p>";
+                echo "<p>No se pudo realizar el alquiler: " . $e->getMessage() . "</p>";
             }
         } else {
             echo "<p>No se puede realizar el alquiler, cliente o soporte no encontrados</p>";
@@ -126,5 +127,141 @@ class Videoclub{
 
         return $this; // permite encadenamiento desde Videoclub
     }
+
+    // Alquila múltiples productos a un socio    
+    public function alquilarSocioProductos(int $numSocio, array $numerosProductos) {
+        $cliente = null;
+        $soportesSeleccionados = [];
+
+        // Buscar socio
+        foreach ($this->socios as $s) {
+            if ($s->getNumero() == $numSocio) {
+                $cliente = $s;
+                break;
+            }
+        }
+
+        if (!$cliente) {
+            echo "<p>Socio nº {$numSocio} no encontrado.</p>";
+            return $this;
+        }
+
+        // Comprobar disponibilidad de todos los soportes
+        foreach ($numerosProductos as $numProducto) {
+            $soporte = null;
+            foreach ($this->productos as $p) {
+                if ($p->getNumero() == $numProducto) {
+                    $soporte = $p;
+                    break;
+                }
+            }
+            if (!$soporte) {
+                echo "<p>Soporte nº {$numProducto} no encontrado. Ningún producto será alquilado.</p>";
+                return $this;
+            }
+            if ($soporte->alquilado) {
+                echo "<p>Soporte nº {$numProducto} ya está alquilado. Ningún producto será alquilado.</p>";
+                return $this;
+            }
+            // Verificación extra: el cliente no lo tenga ya alquilado
+            if ($cliente->tieneAlquilado($soporte)) {
+                echo "<p>El cliente ya tiene alquilado el soporte nº {$numProducto}. Ningún producto será alquilado.</p>";
+                return $this;
+            }
+
+            $soportesSeleccionados[] = $soporte;
+        }
+
+        // Alquilar todos los soportes
+        foreach ($soportesSeleccionados as $soporte) {
+            try {
+                $cliente->alquilar($soporte);
+                $this->numProductosAlquilados++;
+                $this->numTotalAlquileres++;
+            } catch (\PROYECTO_VIDEOCLUB_PABLO_ISMAEL\Util\VideoclubException $e) {
+                echo "<p>No se pudo alquilar el soporte: " . $e->getMessage() . "</p>";
+            }
+        }
+
+        return $this;
+    }
+
+    // Devuelve un único producto de un socio
+    public function devolverSocioProducto(int $numSocio, int $numeroProducto) {
+        $cliente = null;
+        $soporte = null;
+
+        foreach ($this->socios as $s) {
+            if ($s->getNumero() == $numSocio) {
+                $cliente = $s;
+                break;
+            }
+        }
+
+        foreach ($this->productos as $p) {
+            if ($p->getNumero() == $numeroProducto) {
+                $soporte = $p;
+                break;
+            }
+        }
+
+        if ($cliente && $soporte) {
+            try {
+                $cliente->devolver($numeroProducto);
+                // Actualizamos contadores si los tienes, por ejemplo:
+                if ($this->numProductosAlquilados > 0) $this->numProductosAlquilados--;
+            } catch (\PROYECTO_VIDEOCLUB_PABLO_ISMAEL\Util\VideoclubException $e) {
+                echo "<p>No se pudo devolver el soporte: " . $e->getMessage() . "</p>";
+            }
+        } else {
+            echo "<p>No se puede devolver, cliente o soporte no encontrados</p>";
+        }
+
+        return $this; // permite encadenamiento
+    }    
+
+    // Devuelve múltiples productos de un socio
+    public function devolverSocioProductos(int $numSocio, array $numerosProductos) {
+        $cliente = null;
+        $soportesParaDevolver = [];
+
+        // Buscar cliente
+        foreach ($this->socios as $s) {
+            if ($s->getNumero() == $numSocio) {
+                $cliente = $s;
+                break;
+            }
+        }
+
+        if (!$cliente) {
+            echo "<p>Cliente no encontrado</p>";
+            return $this;
+        }
+
+        // Verificar que todos los soportes existen y están alquilados por el cliente
+        foreach ($numerosProductos as $numProd) {
+            $soporte = null;
+            foreach ($this->productos as $p) {
+                if ($p->getNumero() == $numProd) {
+                    $soporte = $p;
+                    break;
+                }
+            }
+            if (!$soporte || !$cliente->tieneAlquilado($soporte)) {
+                echo "<p>No se puede devolver, alguno de los productos no estaba alquilado por el cliente.</p>";
+                return $this; // aborta sin devolver nada
+            }
+            $soportesParaDevolver[] = $soporte;
+        }
+
+        // Devolver todos los soportes
+        foreach ($soportesParaDevolver as $s) {
+            $cliente->devolver($s->getNumero());
+            if ($this->numProductosAlquilados > 0) $this->numProductosAlquilados--;
+        }
+
+        return $this; // permite encadenamiento
+    }
+
 }
 ?>

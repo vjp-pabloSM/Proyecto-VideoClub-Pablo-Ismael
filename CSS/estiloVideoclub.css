@@ -1,0 +1,28 @@
+body {
+    background-color: #121212; /* fondo oscuro */
+    color: #e0e0e0; /* texto claro */
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    width: fit-content;
+}
+strong {
+    color: #ff6f61;
+    width: fit-content;
+}
+h1 {
+    color: aqua;
+    width: fit-content;
+}
+h1:hover {
+    color: rgb(0, 162, 255);
+}
+h3 {
+    color: rgb(209, 97, 32);
+    width: fit-content;
+}
+h3:hover {
+    color: rgb(255, 94, 0);
+}
+strong:hover {
+    color: #f7311f;
+}
