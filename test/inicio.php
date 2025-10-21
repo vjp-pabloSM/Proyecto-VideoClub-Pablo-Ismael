@@ -1,24 +1,26 @@
 <?php
 
-//Inicio Soporte
-include_once "Resumible.php";
-include_once "Soporte.php";
-include_once "CintaVideo.php";
-include_once "Dvd.php";
-include_once "Juego.php";
+// v0.331
+
+use PROYECTO_VIDEOCLUB_PABLO_ISMAEL\Dvd;
+use PROYECTO_VIDEOCLUB_PABLO_ISMAEL\CintaVideo;
+use PROYECTO_VIDEOCLUB_PABLO_ISMAEL\Juego;
+
+require_once __DIR__ . '/../app/autoload.php';
 
 // Alterado para los cambios hechos en soporte
 $soporte1 = new Dvd("Batman", 22, 17, "es, en", "16:9"); 
 echo "<strong>" . $soporte1->titulo . "</strong>"; 
 echo "<br>Precio: " . $soporte1->getPrecio() . " €"; 
-echo "<br>Precio IVA incluido: " . $soporte1->getPrecioConIVA() . " €<br>";
+echo "<br>Precio IVA incluido: " . $soporte1->getPrecioConIva() . " €<br>";
 $soporte1->muestraResumen();
 
 // Inicio CintaVideo
 $miCinta = new CintaVideo("Los cazafantasmas", 23, 3.5, 107); 
 echo "<strong>" . $miCinta->titulo . "</strong>"; 
 echo "<br>Precio: " . $miCinta->getPrecio() . " €"; 
-echo "<br>Precio IVA incluido: " . $miCinta->getPrecioConIva() . " €<br>";$miCinta->muestraResumen();
+echo "<br>Precio IVA incluido: " . $miCinta->getPrecioConIva() . " €<br>";
+$miCinta->muestraResumen();
 
 //Inicio Dvd
 $miDvd = new Dvd("Origen", 24, 15, "es, en, fr", "16:9"); 

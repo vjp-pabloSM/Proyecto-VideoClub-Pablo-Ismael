@@ -1,9 +1,5 @@
-<?php 
-require_once 'Soporte.php';
-require_once 'CintaVideo.php';
-require_once 'Dvd.php';
-require_once 'Juego.php';
-require_once 'Cliente.php';
+<?php
+namespace PROYECTO_VIDEOCLUB_PABLO_ISMAEL;
 
 // Clase videoclub que relaciona las clases cliente y soporte
 class Videoclub{
@@ -100,7 +96,7 @@ class Videoclub{
         } else {
             echo "<p>No se puede realizar el alquiler, cliente o soporte no encontrados</p>";
         }
+        return $this; // permite encadenamiento
     }
 }
-
 ?>

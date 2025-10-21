@@ -1,5 +1,8 @@
 <?php
-include_once "Videoclub.php"; // No incluimos nada más
+
+use PROYECTO_VIDEOCLUB_PABLO_ISMAEL\Videoclub;
+
+require_once __DIR__ . '/../app/autoload.php';
 
 $vc = new Videoclub("La Caverna de Platón"); 
 
@@ -19,15 +22,14 @@ $vc->listarProductos();
 $vc->incluirSocio("Benito Martínez", 2); 
 $vc->incluirSocio("Emmanuel Gazmey"); 
 
-$vc->alquilarSocioProducto(1,2); 
-$vc->alquilarSocioProducto(1,3); 
-//alquilo otra vez el soporte 2 al socio 1. 
-// no debe dejarme porque ya lo tiene alquilado 
-$vc->alquilarSocioProducto(1,2); 
-//alquilo el soporte 6 al socio 1. 
-//no se puede porque el socio 1 tiene 2 alquileres como máximo 
-$vc->alquilarSocioProducto(1,6); 
-
+// Encadenamiento de operaciones de alquiler
+$vc->alquilarSocioProducto(1,2)
+   ->alquilarSocioProducto(1,3)
+   // intento alquilar de nuevo el soporte 2 (debe detectar que ya está alquilado)
+   ->alquilarSocioProducto(1,2)
+   // intento alquilar el soporte 6 (debe respetar el límite de alquileres)
+   ->alquilarSocioProducto(1,6);
+ 
 //listo los socios 
 $vc->listarSocios();
 

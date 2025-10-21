@@ -1,10 +1,11 @@
 <?php
 
-// Para probar la clase Cliente.php
-include "CintaVideo.php";
-include "Dvd.php";
-include "Juego.php";
-include "Cliente.php";
+use PROYECTO_VIDEOCLUB_PABLO_ISMAEL\CintaVideo;
+use PROYECTO_VIDEOCLUB_PABLO_ISMAEL\Dvd;
+use PROYECTO_VIDEOCLUB_PABLO_ISMAEL\Juego;
+use PROYECTO_VIDEOCLUB_PABLO_ISMAEL\Cliente;
+
+require_once __DIR__ . '/../app/autoload.php';
 
 //instanciamos un par de objetos cliente
 $cliente1 = new Cliente("Guillermo Díaz", 23);

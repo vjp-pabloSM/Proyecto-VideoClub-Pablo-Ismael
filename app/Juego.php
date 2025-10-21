@@ -1,5 +1,6 @@
 <?php
-include_once "Soporte.php";
+namespace PROYECTO_VIDEOCLUB_PABLO_ISMAEL;
+
 
 // Clase Juego hija de Soporte
 class Juego extends Soporte {

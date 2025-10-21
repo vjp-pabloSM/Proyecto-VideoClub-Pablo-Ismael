@@ -1,7 +1,8 @@
 <?php
-include_once "Resumible.php";
+namespace PROYECTO_VIDEOCLUB_PABLO_ISMAEL;
 
-// Clase base para los soportes de un videoclub
+use PROYECTO_VIDEOCLUB_PABLO_ISMAEL\interfaz\Resumible;
+
 abstract class Soporte implements Resumible {
 
     // Variables

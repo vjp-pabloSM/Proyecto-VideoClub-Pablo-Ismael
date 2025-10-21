@@ -1,4 +1,8 @@
 <?php
+namespace PROYECTO_VIDEOCLUB_PABLO_ISMAEL;
+
+
+// Clase Cliente
 class Cliente {
 
     // Variables
@@ -40,28 +44,28 @@ class Cliente {
     }
 
     // Función para alquilar un soporte
-    public function alquilar(Soporte $s):bool {
-
-        // Para saber si lo tiene ya alquilado
-        if ($this->tieneAlquilado($s)) {
-            echo "<p>El cliante " . $this->nombre . " ya tiene alquilado el soporte: </p>";
-            $s->muestraResumen();
-            return false;
-        }
-
-        // Para saber si sobrepasa el máximo de alquileres simultáneos
-        if (count($this->soportesAlquilados) >= $this->maxAlquilerConcurrente) {
-            echo "<p>El cliente " . $this->nombre . " ha alcanzado el número máximo de alquileres permitidos.<br>No podrá volver a alquilar en este Videoclub hasta devolver algo.</p>";
-            return false;
-        }
-
-        // Se añade el alquiler al cliente
-        $this->soportesAlquilados[] = $s;
-        $this->numSoportesAlquilados++;
-        echo "<p>El cliente " . $this->nombre . " ha alquilado este soporte: </p>";
-        $s->muestraResumen();
-        return true;
-    }
+    public function alquilar(Soporte $s) {
+ 
+         // Para saber si lo tiene ya alquilado
+         if ($this->tieneAlquilado($s)) {
+             echo "<p>El cliante " . $this->nombre . " ya tiene alquilado el soporte: </p>";
+             $s->muestraResumen();
+             return $this; // permite encadenamiento incluso si falla
+         }
+ 
+         // Para saber si sobrepasa el máximo de alquileres simultáneos
+         if (count($this->soportesAlquilados) >= $this->maxAlquilerConcurrente) {
+             echo "<p>El cliente " . $this->nombre . " ha alcanzado el número máximo de alquileres permitidos.<br>No podrá volver a alquilar en este Videoclub hasta devolver algo.</p>";
+             return $this; // permite encadenamiento aunque no se complete el alquiler
+         }
+ 
+         // Se añade el alquiler al cliente
+         $this->soportesAlquilados[] = $s;
+         $this->numSoportesAlquilados++;
+         echo "<p>El cliente " . $this->nombre . " ha alquilado este soporte: </p>";
+         $s->muestraResumen();
+         return $this; // permite encadenamiento
+     }
 
     // Devuleve un soporte por el número
     public function devolver(int $numSoporte):bool {
@@ -102,5 +106,4 @@ class Cliente {
         echo "Soportes alquilados: " . count($this->soportesAlquilados) . " de " . $this->maxAlquilerConcurrente . " posibles.</p>";
     }
 }
-
 ?>
