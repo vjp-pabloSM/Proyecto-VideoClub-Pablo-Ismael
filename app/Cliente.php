@@ -1,6 +1,9 @@
 <?php
 namespace PROYECTO_VIDEOCLUB_PABLO_ISMAEL;
 
+use PROYECTO_VIDEOCLUB_PABLO_ISMAEL\Util\SoporteYaAlquiladoException;
+use PROYECTO_VIDEOCLUB_PABLO_ISMAEL\Util\CupoSuperadoException;
+use PROYECTO_VIDEOCLUB_PABLO_ISMAEL\Util\SoporteNoEncontradoException;
 
 // Clase Cliente
 class Cliente {
@@ -43,42 +46,53 @@ class Cliente {
         return false;
     }
 
-    // Función para alquilar un soporte
+    // Función para alquilar un soporte (lanza excepciones y permite encadenamiento)
     public function alquilar(Soporte $s) {
- 
+
          // Para saber si lo tiene ya alquilado
          if ($this->tieneAlquilado($s)) {
-             echo "<p>El cliante " . $this->nombre . " ya tiene alquilado el soporte: </p>";
-             $s->muestraResumen();
-             return $this; // permite encadenamiento incluso si falla
+             throw new SoporteYaAlquiladoException(
+                 "El cliente {$this->nombre} (nº {$this->numero}) ya tiene alquilado el soporte nº {$s->getNumero()}."
+             );
          }
- 
+
          // Para saber si sobrepasa el máximo de alquileres simultáneos
          if (count($this->soportesAlquilados) >= $this->maxAlquilerConcurrente) {
-             echo "<p>El cliente " . $this->nombre . " ha alcanzado el número máximo de alquileres permitidos.<br>No podrá volver a alquilar en este Videoclub hasta devolver algo.</p>";
-             return $this; // permite encadenamiento aunque no se complete el alquiler
+             throw new CupoSuperadoException(
+                 "El cliente {$this->nombre} (nº {$this->numero}) ha alcanzado el número máximo de alquileres ({$this->maxAlquilerConcurrente})."
+             );
          }
- 
+
          // Se añade el alquiler al cliente
          $this->soportesAlquilados[] = $s;
          $this->numSoportesAlquilados++;
+         // marcar el soporte como alquilado
+         $s->alquilado = true;
+
          echo "<p>El cliente " . $this->nombre . " ha alquilado este soporte: </p>";
          $s->muestraResumen();
+
          return $this; // permite encadenamiento
      }
 
-    // Devuleve un soporte por el número
-    public function devolver(int $numSoporte):bool {
+    // Devuelve un soporte por el número (lanza excepción si no lo tenía; retorna $this para encadenar)
+    public function devolver(int $numSoporte) {
         foreach ($this->soportesAlquilados as $indice => $soporte) {
             if ($soporte->getNumero() == $numSoporte) {
                 unset($this->soportesAlquilados[$indice]);
+                // reindexar array
+                $this->soportesAlquilados = array_values($this->soportesAlquilados);
+                // marcar soporte como no alquilado
+                $soporte->alquilado = false;
+
                 echo "<p>El cliente " . $this->nombre . " ha devuelto el soporte número " . $numSoporte . ".</p>";
-                return true;
+                return $this; // encadenamiento
             }
         }
 
-        echo "<p>El cliente " . $this->nombre . " no tenía alquilado el soporte número " . $numSoporte . ".</p>";
-        return false;
+        throw new SoporteNoEncontradoException(
+            "El cliente {$this->nombre} (nº {$this->numero}) no tenía alquilado el soporte nº {$numSoporte}."
+        );
     }
 
     // Resumen de los alquileres en el momento

@@ -1,6 +1,5 @@
 <?php
 
-// v0.331
 
 use PROYECTO_VIDEOCLUB_PABLO_ISMAEL\Dvd;
 use PROYECTO_VIDEOCLUB_PABLO_ISMAEL\CintaVideo;
@@ -8,7 +7,7 @@ use PROYECTO_VIDEOCLUB_PABLO_ISMAEL\Juego;
 
 require_once __DIR__ . '/../app/autoload.php';
 
-// Alterado para los cambios hechos en soporte
+// Inicio Dvd
 $soporte1 = new Dvd("Batman", 22, 17, "es, en", "16:9"); 
 echo "<strong>" . $soporte1->titulo . "</strong>"; 
 echo "<br>Precio: " . $soporte1->getPrecio() . " €"; 

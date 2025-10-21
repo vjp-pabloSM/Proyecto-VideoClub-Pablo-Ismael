@@ -1,51 +1,26 @@
 <?php
 
-use PROYECTO_VIDEOCLUB_PABLO_ISMAEL\CintaVideo;
-use PROYECTO_VIDEOCLUB_PABLO_ISMAEL\Dvd;
-use PROYECTO_VIDEOCLUB_PABLO_ISMAEL\Juego;
-use PROYECTO_VIDEOCLUB_PABLO_ISMAEL\Cliente;
+use PROYECTO_VIDEOCLUB_PABLO_ISMAEL\Videoclub;
 
 require_once __DIR__ . '/../app/autoload.php';
 
-//instanciamos un par de objetos cliente
-$cliente1 = new Cliente("Guillermo Díaz", 23);
-$cliente2 = new Cliente("Samuel de Luque", 33);
+// crear videoclub y añadir soportes
+$vc = new Videoclub('Pruebas');
+$vc->incluirCintaVideo("Los cazafantasmas", 3.5, 107);
+$vc->incluirJuego("The Last of Us Part II", 49.99, "PS4", 1, 1);
+$vc->incluirDvd("Origen", 15, "es,en,fr", "16:9");
+$vc->incluirDvd("El Imperio Contraataca", 3, "es,en","16:9");
 
-//mostramos el número de cada cliente creado 
-echo "<br>El identificador del cliente 1 es: " . $cliente1->getNumero();
-echo "<br>El identificador del cliente 2 es: " . $cliente2->getNumero();
+// crear socios (usar Videoclub para gestionar socios)
+$vc->incluirSocio("Guillermo Díaz", 3); // será socio nº 1
+$vc->incluirSocio("Samuel de Luque", 3); // será socio nº 2
 
-//instancio algunos soportes 
-$soporte1 = new CintaVideo("Los cazafantasmas", 23, 3.5, 107);
-$soporte2 = new Juego("The Last of Us Part II", 26, 49.99, "PS4", 1, 1);  
-$soporte3 = new Dvd("Origen", 24, 15, "es,en,fr", "16:9");
-$soporte4 = new Dvd("El Imperio Contraataca", 4, 3, "es,en","16:9");
+$vc->alquilarSocioProducto(1,1)   // socio 1 alquila soporte 1
+   ->alquilarSocioProducto(1,2)  // encadenado
+   ->alquilarSocioProducto(1,3); // encadenado
 
-//alquilo algunos soportes
-$cliente1->alquilar($soporte1);
-$cliente1->alquilar($soporte2);
-$cliente1->alquilar($soporte3);
-
-//voy a intentar alquilar de nuevo un soporte que ya tiene alquilado
-$cliente1->alquilar($soporte1);
-
-//el cliente tiene 3 soportes en alquiler como máximo
-//este soporte no lo va a poder alquilar
-$cliente1->alquilar($soporte4);
-
-//este soporte no lo tiene alquilado
-$cliente1->devolver(4);
-
-//devuelvo un soporte que sí que tiene alquilado
-$cliente1->devolver(26);
-
-//alquilo otro soporte
-$cliente1->alquilar($soporte4);
-
-//listo los elementos alquilados
-$cliente1->listarAlquileres();
-
-//este cliente no tiene alquileres
-$cliente2->devolver(26);
+// listar socios y alquileres
+$vc->listarSocios();
+$vc->listarProductos();
 
 ?>

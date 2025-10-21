@@ -1,6 +1,8 @@
 <?php
 namespace PROYECTO_VIDEOCLUB_PABLO_ISMAEL;
 
+use PROYECTO_VIDEOCLUB_PABLO_ISMAEL\Util\VideoclubException;
+
 // Clase videoclub que relaciona las clases cliente y soporte
 class Videoclub{
     private $nombre;
@@ -8,6 +10,10 @@ class Videoclub{
     private $numProductos = 0;
     private $socios = [];
     private $numSocios = 0;
+
+    // Nuevas propiedades para seguimiento de alquileres
+    private $numProductosAlquilados = 0;
+    private $numTotalAlquileres = 0;
 
     // constructor que solo recibe $nombre porque es lo único que se necesita para crear el videoclub
     public function __construct($nombre){
@@ -74,7 +80,16 @@ class Videoclub{
         }
     }
 
-    // Método para alquilarle porductos a los socios
+    // getters para las nuevas propiedades
+    public function getNumProductosAlquilados(): int {
+        return $this->numProductosAlquilados;
+    }
+
+    public function getNumTotalAlquileres(): int {
+        return $this->numTotalAlquileres;
+    }
+
+    // Método para alquilarle productos a los socios (ahora captura excepciones lanzadas por Cliente)
     public function alquilarSocioProducto($numeroCliente, $numeroSuporte) {
         $cliente = null;
         $soporte = null;
@@ -92,11 +107,24 @@ class Videoclub{
         }
 
         if ($cliente && $soporte) {
-            $cliente->alquilar($soporte);
+            try {
+                $wasAlquilado = $soporte->alquilado ?? false;
+                $cliente->alquilar($soporte);
+                // si antes no estaba alquilado y ahora sí, actualizamos contadores
+                if (!$wasAlquilado && ($soporte->alquilado ?? false)) {
+                    $this->numProductosAlquilados++;
+                }
+                // cada intento de alquiler correcto cuenta como alquiler total
+                $this->numTotalAlquileres++;
+            } catch (VideoclubException $e) {
+                // Informar al usuario del motivo (todas las excepciones de cliente heredan de VideoclubException)
+                echo "<p>No se pudo realizar el alquiler: " . htmlspecialchars($e->getMessage(), ENT_QUOTES, 'UTF-8') . "</p>";
+            }
         } else {
             echo "<p>No se puede realizar el alquiler, cliente o soporte no encontrados</p>";
         }
-        return $this; // permite encadenamiento
+
+        return $this; // permite encadenamiento desde Videoclub
     }
 }
 ?>

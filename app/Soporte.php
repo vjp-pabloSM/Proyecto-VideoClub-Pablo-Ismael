@@ -7,6 +7,7 @@ abstract class Soporte implements Resumible {
 
     // Variables
     public $titulo = "";
+    public $alquilado = false;
     protected $numero = 0;
     private $precio = 0;
     private const IVA = 0.21;
